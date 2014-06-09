@@ -7,6 +7,7 @@ use pocketmine\command\Command;
 use pocketmine\command\CommandSender;
 use pocketmine\command\CommandExecutor;
 use pocketmine\event\Listener;
+use pocketmine\network\protocol\AddPlayerPacket;
 use pocketmine\Player;
 
 class Main extends PluginBase implements Listener, CommandExecutor{
