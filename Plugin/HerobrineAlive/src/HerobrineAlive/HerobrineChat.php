@@ -3,6 +3,8 @@
 namespace HerobrineAlive;
 
 use pocketmine\scheduler\PluginTask;
+use pocketmine\Server;
+use pocketmine\Player;
 
 class HerobrineChat extends PluginTask{
     public function onRun(){
@@ -29,6 +31,6 @@ class HerobrineChat extends PluginTask{
         }elseif($chatid == "10"){
             $message = "<Herobrine> You're next!";
         }
-        //Broadcast $message
+        Server::getInstance()->broadcastMessage($message);
     }
 }
