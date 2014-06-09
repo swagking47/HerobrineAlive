@@ -6,11 +6,10 @@ use pocketmine\plugin\PluginBase;
 use pocketmine\command\Command;
 use pocketmine\command\CommandSender;
 use pocketmine\command\CommandExecutor;
-use pocketmine\event\Listener;
 use pocketmine\network\protocol\AddPlayerPacket;
 use pocketmine\Player;
 
-class Main extends PluginBase implements Listener, CommandExecutor{
+class Main extends PluginBase implements CommandExecutor, HerobrineChat, StartHerobrineAI, StopHerobrineAI{
     public $HerobrineActive = false;
     public function onEnable(){
         $this->getServer()->getPluginManager()->registerEvents($this, $this);
