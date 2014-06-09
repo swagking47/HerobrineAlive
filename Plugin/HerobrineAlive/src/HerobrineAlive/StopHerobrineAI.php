@@ -3,6 +3,7 @@
 namespace HerobrineAlive;
 
 use pocketmine\scheduler\PluginTask;
+use pocketmine\network\protocol\AddPlayerPacket;
 use pocketmine\Player;
 
 class StopHerobrineAI extends PluginTask implements StartHerobrineAI{
