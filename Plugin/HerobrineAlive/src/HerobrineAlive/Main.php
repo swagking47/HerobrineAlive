@@ -14,7 +14,9 @@ class Main extends PluginBase implements Listener, CommandExecutor{
     public $HerobrineActive = false;
     public function onEnable(){
         $this->getServer()->getPluginManager()->registerEvents($this, $this);
-        $this->getServer()->getScheduler()->scheduleRepeatingTask(new HerobrineChat($this), 3*60*20);
+        if($HerobrineActive == true){
+            $this->getServer()->getScheduler()->scheduleRepeatingTask(new HerobrineChat($this), 3*60*20);
+        }
         $this->getLogger()->log("[INFO] HerobrineAlive Loaded!");
     }
     
