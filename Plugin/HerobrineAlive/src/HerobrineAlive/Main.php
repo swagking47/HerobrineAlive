@@ -10,7 +10,7 @@ use pocketmine\event\Listener;
 use pocketmine\Player;
 
 class Main extends PluginBase implements Listener, CommandExecutor{
-    $HerobrineActive = false;
+    public $HerobrineActive = false;
     public function onEnable(){
         $this->getServer()->getPluginManager()->registerEvents($this, $this);
         $this->getLogger()->log("[INFO] HerobrineAlive Loaded!");
