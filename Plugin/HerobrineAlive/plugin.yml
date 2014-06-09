@@ -4,7 +4,7 @@ version: 1.0.0dev
 api: [1.0.0]
 
 load: STARTUP
-authors: [Comedyman937]
+authors: [Comedyman937, PEMapModder]
 description: Add Herobrine to PocketMine-MP!
 
 commands:
