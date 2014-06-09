@@ -27,7 +27,7 @@ class HerobrineChat extends PluginTask{
         }elseif($chatid == "9"){
             $message = "<Herobrine> No one can save you now!";
         }elseif($chatid == "10"){
-            $message = "<Herobrine> Your next!";
+            $message = "<Herobrine> You're next!";
         }
         //Broadcast $message
     }
