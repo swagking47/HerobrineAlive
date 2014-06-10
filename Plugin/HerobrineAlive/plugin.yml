@@ -12,7 +12,7 @@ commands:
         description: "HerobrineAlive Commands!"
         usage: "/herobrine <release|kill|attack> [player]"
 # Please don't add caps the things. They only make the player feel necessary to use caps.
-        aiases: [herobrine, hba, hb]
+        aiases: [herobrinealive, hba, hb]
         permission: herobrinealive.command.herobrinealive
 permissions:
     herobrinealive.command.herobrinealive:
