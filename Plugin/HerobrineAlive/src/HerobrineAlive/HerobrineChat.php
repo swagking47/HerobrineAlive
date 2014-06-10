@@ -2,35 +2,28 @@
 
 namespace HerobrineAlive;
 
-use pocketmine\scheduler\PluginTask;
 use pocketmine\Server;
-use pocketmine\Player;
+use pocketmine\scheduler\PluginTask;
 
 class HerobrineChat extends PluginTask{
-    public function onRun(){
-        $chatid = rand(1, 10); //Get a random number to choose the message text
-        
-        if($chatid == "1"){
-            $message = "<Herobrine> Where is your god now?";
-        }elseif($chatid == "2"){
-            $message = "<Herobrine> You can not defeat me!";
-        }elseif($chatid == "3"){
-            $message = "<Herobrine> I am your god now!";
-        }elseif($chatid == "4"){
-            $message = "<Herobrine> Your world is mine!";
-        }elseif($chatid == "5"){
-            $message = "<Herobrine> You can't escape me!";
-        }elseif($chatid == "6"){
-            $message = "<Herobrine> I am your worst nightmare!";
-        }elseif($chatid == "7"){
-            $message = "<Herobrine> Even Notch can't save you!";
-        }elseif($chatid == "8"){
-            $message = "<Herobrine> I'm here!";
-        }elseif($chatid == "9"){
-            $message = "<Herobrine> No one can save you now!";
-        }elseif($chatid == "10"){
-            $message = "<Herobrine> You're next!";
-        }
-        Server::getInstance()->broadcastMessage($message);
-    }
+	private $messages = [];
+	public function __construct(Main $plugin){
+		parent::__construct($plugin);
+		$this->messages[] = "Where is your god now?";
+		$this->messages[] = "You can not defeat me!";
+		$this->messages[] = "I am your god now!";
+		$this->messages[] = "Your world is mine!";
+		$this->messages[] = "You can't escape me!";
+		$this->messages[] = "I am your worst nightmare!";
+		$this->messages[] = "Not even can Notch save you!"; // inversion xD
+		$this->messages[] = "I'm here!";
+		$this->messages[] = "No one can save you now!";
+		$this->messages[] = "You're next!";
+	}
+	public function onRun($ticks){
+		$herobrine = $this->getPlugin()->getHerobrine();
+		if($herobrine instanceof Herobrine){
+			$herobrine->say(array_rand($this->messages));
+		}
+	}
 }
