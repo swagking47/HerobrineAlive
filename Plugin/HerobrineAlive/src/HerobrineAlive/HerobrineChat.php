@@ -4,33 +4,23 @@ namespace HerobrineAlive;
 
 use pocketmine\scheduler\PluginTask;
 use pocketmine\Server;
-use pocketmine\Player;
 
 class HerobrineChat extends PluginTask{
+    private $messages = [];
+    public function __construct(Main $plugin){
+        parent::__construct($plugin);
+        $this->messages[] = "<Herobrine> Where is your god now?";
+        $this->messages[] = "<Herobrine> You can not defeat me!";
+        $this->messages[] = "<Herobrine> I am your god now!";
+        $this->messages[] = "<Herobrine> Your world is mine!";
+        $this->messages[] = "<Herobrine> You can't escape me!";
+        $this->messages[] = "<Herobrine> I am your worst nightmare!";
+        $this->messages[] = "<Herobrine> Even Notch can't save you!";
+        $this->messages[] = "<Herobrine> I'm here!";
+        $this->messages[] = "<Herobrine> No one can save you now!";
+        $this->messages[] = "<Herobrine> You're next!";
+    }
     public function onRun(){
-        $chatid = rand(1, 10); //Get a random number to choose the message text
-        
-        if($chatid == "1"){
-            $message = "<Herobrine> Where is your god now?";
-        }elseif($chatid == "2"){
-            $message = "<Herobrine> You can not defeat me!";
-        }elseif($chatid == "3"){
-            $message = "<Herobrine> I am your god now!";
-        }elseif($chatid == "4"){
-            $message = "<Herobrine> Your world is mine!";
-        }elseif($chatid == "5"){
-            $message = "<Herobrine> You can't escape me!";
-        }elseif($chatid == "6"){
-            $message = "<Herobrine> I am your worst nightmare!";
-        }elseif($chatid == "7"){
-            $message = "<Herobrine> Even Notch can't save you!";
-        }elseif($chatid == "8"){
-            $message = "<Herobrine> I'm here!";
-        }elseif($chatid == "9"){
-            $message = "<Herobrine> No one can save you now!";
-        }elseif($chatid == "10"){
-            $message = "<Herobrine> You're next!";
-        }
-        Server::getInstance()->broadcastMessage($message);
+        Server::getInstance()->broadcastMessage(array_rand($this->messages));
     }
 }
