@@ -11,7 +11,7 @@ use pocketmine\network\protocol\AddPlayerPacket;
 class Main extends PluginBase{
 	public $herobrine = false;
 	public function onEnable(){
-		$this->getServer()->getPluginManager()->registerEvents($this, $this);
+		$this->getServer()->getPluginManager()->registerEvents($this, $this); // Do we even need this?
 		// how do you expect this to be true if there is nothing that sets it to true?
 		$this->getServer()->getScheduler()->scheduleRepeatingTask(new HerobrineChat($this), 3*60*20);
 		$this->getLogger()->info("HerobrineAlive Loaded!");
