@@ -3,7 +3,7 @@ main: HerobrineAlive\Main
 version: 1.0.0dev
 api: [1.0.0]
 
-load: STARTUP
+load: POSTWORLD
 authors: [Comedyman937, PEMapModder]
 description: Add Herobrine to PocketMine-MP!
 
@@ -11,7 +11,6 @@ commands:
     herobrine:
         description: "HerobrineAlive Commands!"
         usage: "/herobrine <release|kill|attack> [player]"
-# Please don't add caps the things. They only make the player feel necessary to use caps.
         aiases: [herobrinealive, hba, hb]
         permission: herobrinealive.command.herobrinealive
 permissions:
