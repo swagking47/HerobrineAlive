@@ -2,13 +2,13 @@
 
 namespace HerobrineAlive;
 
+use pocketmine\event\Listener;
 use pocketmine\Player;
 use pocketmine\plugin\PluginBase;
 use pocketmine\command\Command;
 use pocketmine\command\CommandSender;
-use pocketmine\network\protocol\AddPlayerPacket;
 
-class Main extends PluginBase{
+class Main extends PluginBase implements Listener{
 	public $herobrine = false;
 	public function onEnable(){
 		$this->getServer()->getPluginManager()->registerEvents($this, $this);
@@ -16,7 +16,6 @@ class Main extends PluginBase{
 		$this->getServer()->getScheduler()->scheduleRepeatingTask(new HerobrineChat($this), 3*60*20);
 		$this->getLogger()->info("HerobrineAlive Loaded!");
 	}
-	
 	public function onCommand(CommandSender $sender, Command $cmd, $label, array $args){
 		switch($cmd->getName()){
 			case "herobrine":
@@ -37,7 +36,7 @@ class Main extends PluginBase{
 					}
 				}elseif($args[0] == "attack"){
 					$target = $this->getServer()->getPlayer($args[1]);
-					if($p instanceof Player){
+					if($target instanceof Player){
 						if($this->herobrine instanceof Herobrine){
 							$this->herobrine->setTarget($target);
 							$sender->sendMessage("[HerobrineAlive] Herobrine is now after " . $args[1] . "!");
@@ -53,8 +52,10 @@ class Main extends PluginBase{
 			break;
 		}
 	}
-
 	public function onDisable(){
 		$this->getLogger()->info("HerobrineAlive Unloaded!");
+	}
+	public function getHerobrine(){
+		return $this->herobrine;
 	}
 }

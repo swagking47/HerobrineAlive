@@ -3,8 +3,9 @@
 namespace HerobrineAlive;
 
 use pocketmine\scheduler\PluginTask;
+use pocketmine\Server;
 
-class HerobrineAI{
+class HerobrineAI extends PluginTask{
 	/** @var Herobrine */
 	private $hb;
 	public function __construct(Main $plugin, Herobrine $hb, $tick){

@@ -2,7 +2,6 @@
 
 namespace HerobrineAlive;
 
-use pocketmine\Server;
 use pocketmine\scheduler\PluginTask;
 
 class HerobrineChat extends PluginTask{
@@ -21,7 +20,9 @@ class HerobrineChat extends PluginTask{
 		$this->messages[] = "You're next!";
 	}
 	public function onRun($ticks){
-		$herobrine = $this->getPlugin()->getHerobrine();
+		/** @var Main $plugin */
+		$plugin = $this->getOwner();
+		$herobrine = $plugin->getHerobrine();
 		if($herobrine instanceof Herobrine){
 			$herobrine->say(array_rand($this->messages));
 		}

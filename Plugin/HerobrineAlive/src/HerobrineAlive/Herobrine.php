@@ -2,6 +2,8 @@
 
 namespace HerobrineAlive;
 
+use pocketmine\inventory\InventoryHolder;
+use pocketmine\inventory\InventoryType;
 use pocketmine\Player;
 use pocketmine\Server;
 use pocketmine\entity\Entity;
@@ -10,7 +12,7 @@ use pocketmine\level\Position;
 use pocketmine\math\Vector3;
 use pocketmine\network\protocol as ptc;
 
-class Herobrine extends Position implements ProjectileSource{
+class Herobrine extends Position implements ProjectileSource, InventoryHolder{
 	/** @var int */
 	protected $eid;
 	/** @var float */
@@ -23,7 +25,13 @@ class Herobrine extends Position implements ProjectileSource{
 	protected $control;
 	/** @var Player[] */
 	protected $viewers = [];
-	public function __construct(Main $plugin, Position $pos, Vector3 $speed = null, $ticks = 0.1){
+	/** @var int */
+	protected $fireTicks = 0;
+	/** @var HerobrineInventory */
+	protected $inventory;
+	/** @var Entity */
+	protected $target;
+	public function __construct(Main $plugin, Position $pos, Vector3 $speed = null, $ticks = 0.1, $yaw = 0, $pitch = 0){
 		$this->eid = Entity::$entityCount++;
 		$this->plugin = $plugin;
 		$this->server = Server::getInstance();
@@ -35,6 +43,7 @@ class Herobrine extends Position implements ProjectileSource{
 		$this->pitch = $pitch;
 		$this->setLevel($pos->getLevel());
 		$this->speed = ($speed instanceof Vector3) ? new Vector3($speed->getX(), $speed->getY(), $speed->getZ()):new Vector3(0, 0, 0);
+		$this->inventory = new HerobrineInventory($this, InventoryType::get(InventoryType::PLAYER));
 	}
 	public function spawnTo(Player $player){
 		$pk = new ptc\AddPlayerPacket;
@@ -49,7 +58,7 @@ class Herobrine extends Position implements ProjectileSource{
 		$pk->unknown1 = 0;
 		$pk->unknown2 = 0;
 		$pk->metadata = $this->getMetadata();
-		$player->dataPacket($player);
+		$player->dataPacket($pk);
 		$this->viewers[$player->getID()] = $player;
 	}
 	public function despawnFrom(Player $player){
@@ -60,15 +69,15 @@ class Herobrine extends Position implements ProjectileSource{
 		unset($this->viewers[$player->getID()]);
 	}
 	public function say($msg){
-		Server::getInstance()->broadcast($msg);
+		Server::getInstance()->broadcastMessage($msg);
 	}
 	public function setSpeed(Vector3 $motion){
 		$this->speed = $motion;
 		$pk = new ptc\SetEntityMotionPacket;
 		$pk->eid = $this->eid;
-		$this->speedX = $motion->getX();
-		$this->speedY = $motion->getY();
-		$this->speedZ = $motion->getZ();
+		$pk->speedX = $motion->getX();
+		$pk->speedY = $motion->getY();
+		$pk->speedZ = $motion->getZ();
 		$this->broadcastPacket($pk);
 	}
 	public function broadcastPacket(ptc\DataPacket $packet){
@@ -94,8 +103,23 @@ class Herobrine extends Position implements ProjectileSource{
 			16 => ["type" => 0, "value" => 0], // wt* is this?
 			17 => ["type" => 6, "value" => [0, 0, 0]], // wt* is this?
 		]; // TODO 0.9.0 update
+		return $d;
 	}
 	public function isOnFire(){
 		return $this->fireTicks > 0;
+	}
+	public function finalize(){
+		foreach($this->viewers as $viewer){
+			$this->despawnFrom($viewer);
+		}
+	}
+	public function getInventory(){
+		return $this->inventory;
+	}
+	public function setTarget(Entity $target){
+		$this->target = $target;
+	}
+	public function getTarget(){
+		return $this->target;
 	}
 }
