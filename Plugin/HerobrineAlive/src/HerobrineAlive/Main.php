@@ -21,7 +21,8 @@ class Main extends PluginBase implements Listener{
 			case "herobrine":
 				if($args[0] == "release"){
 					if($this->herobrine === false){
-						$this->herobrine = new Herobrine($this, null); // TODO replace null with the spawn position of Herobrine
+						$spawn = $this->getServer()->getDefaultLevel()->getSafeSpawn();
+						$this->herobrine = new Herobrine($this, $spawn); // TODO replace null with the spawn position of Herobrine
 						$sender->sendMessage("[HerobrineAlive] Herobrine has been released!");
 					}else{
 						$sender->sendMessage("[HerobrineAlive] Herobrine is already active!");
