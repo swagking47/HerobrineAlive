@@ -12,7 +12,7 @@ use pocketmine\level\Position;
 use pocketmine\math\Vector3;
 use pocketmine\network\protocol as ptc;
 
-class Herobrine extends Position implements ProjectileSource, InventoryHolder{
+class Herobrine extends Position implements ProjectileSource, InventoryHolder{ // extend Human if it is finished and we feel that it is suitable to
 	/** @var int */
 	protected $eid;
 	/** @var float */
@@ -86,10 +86,14 @@ class Herobrine extends Position implements ProjectileSource, InventoryHolder{
 		}
 	}
 	public function tick(){
+		$this->updateMotion();
 		$this->x += $this->speed->getX();
 		$this->y += $this->speed->getY();
 		$this->z += $this->speed->getZ();
 		$this->fireTicks--;
+	}
+	public function updateMotion(){
+
 	}
 	/**
 	 @return int

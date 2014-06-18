@@ -12,7 +12,7 @@ class Main extends PluginBase implements Listener{
 	public $herobrine = false;
 	public function onEnable(){
 		$this->getServer()->getPluginManager()->registerEvents($this, $this);
-		// how do you expect this to be true if there is nothing that sets it to true?
+		$this->saveDefaultConfig();
 		$this->getServer()->getScheduler()->scheduleRepeatingTask(new HerobrineChat($this), 3*60*20);
 		$this->getLogger()->info("HerobrineAlive Loaded!");
 	}
@@ -22,32 +22,39 @@ class Main extends PluginBase implements Listener{
 				if($args[0] == "release"){
 					if($this->herobrine === false){
 						$spawn = $this->getServer()->getDefaultLevel()->getSafeSpawn();
-						$this->herobrine = new Herobrine($this, $spawn); // TODO replace null with the spawn position of Herobrine
+						$this->herobrine = new Herobrine($this, $spawn);
 						$sender->sendMessage("[HerobrineAlive] Herobrine has been released!");
-					}else{
+					}
+					else{
 						$sender->sendMessage("[HerobrineAlive] Herobrine is already active!");
 					}
-				}elseif($args[0] == "kill"){
+				}
+				elseif($args[0] == "kill"){
 					if($this->herobrine instanceof Herobrine){
 						$this->herobrine->finalize();
 						$this->herobrine = false;
 						$sender->sendMessage("[HerobrineAlive] Herobrine has been killed!");
-					}else{
+					}
+					else{
 						$sender->sendMessage("[HerobrineAlive] Herobrine isn't currently active!");
 					}
-				}elseif($args[0] == "attack"){
+				}
+				elseif($args[0] == "attack"){
 					$target = $this->getServer()->getPlayer($args[1]);
 					if($target instanceof Player){
 						if($this->herobrine instanceof Herobrine){
 							$this->herobrine->setTarget($target);
 							$sender->sendMessage("[HerobrineAlive] Herobrine is now after " . $args[1] . "!");
-						}else{
+						}
+						else{
 							$sender->sendMessage("[HerobrineAlive] Herobrine must be active to attack!");
 						}
-					}else{
+					}
+					else{
 						$sender->sendMessage("[HerobrineAlive] Target player not found!");
 					}
-				}else{
+				}
+				else{
 					$sender->sendMessage("Usage: /herobrine <release|kill|attack> [player]");
 				}
 			break;
@@ -55,7 +62,15 @@ class Main extends PluginBase implements Listener{
 	}
 	public function onDisable(){
 		$this->getLogger()->info("HerobrineAlive Unloaded!");
+		$h =& $this->herobrine;
+		if($h instanceof Herobrine){
+			$h->finalize();
+		}
+		$h = false;
 	}
+	/**
+	 * @return bool|Herobrine
+	 */
 	public function getHerobrine(){
 		return $this->herobrine;
 	}
