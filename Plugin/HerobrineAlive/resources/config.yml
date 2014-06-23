@@ -1,14 +1,18 @@
 #Main Configuration For HerobrineAlive
 Herobrine:
     Enable: true
+    ##Not Implemented##
     AllowGrief: false
     AllowBuild: false
-
+    ##Not Implemented##
+##Not Implemented##
 Minions:
     Zombie: true
     Skeleton: true
     Creeper: true
-    
+##Not Implemented##
 Features:
+    ##Not Implemented##
     Signs: true
+    ##Not Implemented##
     Chat: true
