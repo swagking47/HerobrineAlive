@@ -18,7 +18,8 @@ class HerobrineChat extends PluginTask{
 		$this->messages[] = "I'm here!";
 		$this->messages[] = "No one can save you now!";
 		$this->messages[] = "You're next!";
-	}
+	        $this->messages[] = "Are you ready for death?";
+          }
 	public function onRun($ticks){
 		/** @var Main $plugin */
 		$plugin = $this->getOwner();
